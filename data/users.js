@@ -23,3 +23,13 @@ export const invalidUsers = [
     expectedMessage: "Your password is invalid!",
   },
 ];
+
+export function generateNewUser() {
+  const suffix = `${Date.now()}${Math.floor(Math.random() * 10000)}`;
+
+  return {
+    name: "QA Automation",
+    email: `qa.automation.${suffix}@example.com`,
+    password: "SuperSecret123!",
+  };
+}
