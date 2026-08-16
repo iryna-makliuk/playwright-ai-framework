@@ -1,12 +1,14 @@
 import { test } from "../../fixtures/api.fixture.js";
 import { expect } from "@playwright/test";
 
-test("test api - get request", async ({ request }) => {
-  const response = await request.get("/health-check");
+test("API health check", async ({ apiRequest }) => {
+  const response = await apiRequest.get("health-check");
 
-  await expect(response.status).toBe(200);
-  const body = response.json();
+  expect(response.status()).toBe(200);
 
-  await expect(body.status).toBe(200);
-  await expect(body.message).toBe("Notes API is Running");
+  const body = await response.json();
+
+  expect(body.success).toBe(true);
+  expect(body.status).toBe(200);
+  expect(body.message).toBe("Notes API is Running");
 });
