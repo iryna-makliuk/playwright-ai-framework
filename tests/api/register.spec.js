@@ -1,6 +1,11 @@
 import { test } from "../../fixtures/api.fixture.js";
 import { expect } from "@playwright/test";
 import { generateNewUser } from "../../data/users.js";
+import {
+  registerSuccessSchema,
+  simpleResponseSchema,
+} from "../../utils/schemas.js";
+import { assertMatchesSchema } from "../../utils/validateSchema.js";
 
 test("successful registration", async ({ apiRequest }) => {
   const user = generateNewUser();
@@ -8,8 +13,11 @@ test("successful registration", async ({ apiRequest }) => {
   const response = await apiRequest.post("users/register", { data: user });
 
   expect(response.status()).toBe(201);
+  expect(response.headers()["content-type"]).toContain("application/json");
 
   const body = await response.json();
+  assertMatchesSchema(body, registerSuccessSchema);
+
   expect(body.success).toBe(true);
   expect(body.status).toBe(201);
   expect(body.message).toBe("User account created successfully");
@@ -25,9 +33,13 @@ test("fails to register with an already used email", async ({ apiRequest }) => {
   const response = await apiRequest.post("users/register", { data: user });
 
   expect(response.status()).toBe(409);
+  expect(response.headers()["content-type"]).toContain("application/json");
 
   const body = await response.json();
+  assertMatchesSchema(body, simpleResponseSchema);
+
   expect(body.success).toBe(false);
+  expect(body.status).toBe(409);
   expect(body.message).toBe(
     "An account already exists with the same email address"
   );
@@ -43,9 +55,13 @@ test("fails to register with a password that is too short", async ({
   });
 
   expect(response.status()).toBe(400);
+  expect(response.headers()["content-type"]).toContain("application/json");
 
   const body = await response.json();
+  assertMatchesSchema(body, simpleResponseSchema);
+
   expect(body.success).toBe(false);
+  expect(body.status).toBe(400);
   expect(body.message).toBe("Password must be between 6 and 30 characters");
 });
 
@@ -57,8 +73,12 @@ test("fails to register without an email", async ({ apiRequest }) => {
   });
 
   expect(response.status()).toBe(400);
+  expect(response.headers()["content-type"]).toContain("application/json");
 
   const body = await response.json();
+  assertMatchesSchema(body, simpleResponseSchema);
+
   expect(body.success).toBe(false);
+  expect(body.status).toBe(400);
   expect(body.message).toBe("A valid email address is required");
 });
