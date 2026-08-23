@@ -2,7 +2,12 @@
   "name": "playwright-ai-framework",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "playwright test",
+    "report:generate": "allure generate ./allure-results --clean -o ./allure-report",
+    "report:open": "allure open ./allure-report",
+    "notify:telegram": "node scripts/notify-telegram.mjs"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -10,6 +15,8 @@
   "devDependencies": {
     "@playwright/test": "^1.62.1",
     "@types/node": "^26.1.2",
-    "ajv": "^8.20.0"
+    "ajv": "^8.20.0",
+    "allure-commandline": "^2.43.0",
+    "allure-playwright": "^3.10.2"
   }
 }
