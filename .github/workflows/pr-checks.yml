@@ -1,0 +1,32 @@
+name: PR Checks
+on:
+  pull_request:
+    branches: [ main, master ]
+jobs:
+  smoke:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+    - uses: actions/setup-java@v4
+      with:
+        distribution: temurin
+        java-version: '21'
+    - name: Install dependencies
+      run: npm ci
+    - name: Install Playwright Browsers (Chromium only)
+      run: npx playwright install chromium --with-deps
+    - name: Run smoke tests
+      run: npm run test:smoke
+    - name: Generate Allure report
+      if: ${{ !cancelled() }}
+      run: npm run report:generate
+    - uses: actions/upload-artifact@v4
+      if: ${{ !cancelled() }}
+      with:
+        name: allure-report-pr-${{ github.event.pull_request.number }}
+        path: allure-report/
+        retention-days: 7

@@ -17,7 +17,7 @@ const loginPageHtml = `<!doctype html>
 
 const [invalidUsernameCase] = invalidUsers;
 
-test("invalid login shows the error message without depending on the live site", async ({
+test("invalid login shows the error message without depending on the live site @smoke", async ({
   page,
   loginPage,
 }) => {

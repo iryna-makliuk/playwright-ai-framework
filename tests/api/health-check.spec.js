@@ -3,7 +3,7 @@ import { expect } from "@playwright/test";
 import { simpleResponseSchema } from "../../utils/schemas.js";
 import { assertMatchesSchema } from "../../utils/validateSchema.js";
 
-test("API health check", async ({ apiRequest }) => {
+test("API health check @smoke", async ({ apiRequest }) => {
   const response = await apiRequest.get("health-check");
 
   expect(response.status()).toBe(200);

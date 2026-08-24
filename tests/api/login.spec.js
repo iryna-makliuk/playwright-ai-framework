@@ -4,7 +4,7 @@ import { generateNewUser } from "../../data/users.js";
 import { loginSuccessSchema, simpleResponseSchema } from "../../utils/schemas.js";
 import { assertMatchesSchema } from "../../utils/validateSchema.js";
 
-test("successful login", async ({ apiRequest }) => {
+test("successful login @smoke", async ({ apiRequest }) => {
   const user = generateNewUser();
   await apiRequest.post("users/register", { data: user });
 

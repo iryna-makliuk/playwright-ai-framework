@@ -7,7 +7,7 @@ import {
 } from "../../utils/schemas.js";
 import { assertMatchesSchema } from "../../utils/validateSchema.js";
 
-test("successful registration", async ({ apiRequest }) => {
+test("successful registration @smoke", async ({ apiRequest }) => {
   const user = generateNewUser();
 
   const response = await apiRequest.post("users/register", { data: user });

@@ -26,8 +26,10 @@ function buildMessage(stats) {
       ? `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`
       : null;
 
+  const pipeline = process.env.PIPELINE_LABEL || "Playwright Tests";
+
   const lines = [
-    `${failing ? "❌" : "✅"} Playwright Tests — ${failing ? "FAILED" : "PASSED"}`,
+    `${failing ? "❌" : "✅"} ${pipeline} — ${failing ? "FAILED" : "PASSED"}`,
     `Repo: ${repo}`,
     `Branch: ${branch}${shortSha ? ` (${shortSha})` : ""}`,
     `Tests: ${passed} passed, ${failed} failed, ${stats.flaky} flaky, ${stats.skipped} skipped (${total} total)`,

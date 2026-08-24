@@ -1,7 +1,7 @@
 import { test } from "../../fixtures/pages.fixture.js";
 import { invalidUsers, users } from "../../data/users.js";
 
-test("successful login", async ({ loginPage }) => {
+test("successful login @smoke", async ({ loginPage }) => {
   await loginPage.open();
 
   const securePage = await loginPage.login(users.standard);

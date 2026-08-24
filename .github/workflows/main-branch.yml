@@ -1,8 +1,6 @@
-name: Playwright Tests
+name: Main Branch
 on:
   push:
-    branches: [ main, master ]
-  pull_request:
     branches: [ main, master ]
 jobs:
   test:
@@ -43,4 +41,5 @@ jobs:
       env:
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        PIPELINE_LABEL: Main Branch
       run: npm run notify:telegram
